@@ -14,11 +14,15 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.di.DI;
+import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class InfoNeighbourActivity extends AppCompatActivity {
 
@@ -41,6 +45,11 @@ public class InfoNeighbourActivity extends AppCompatActivity {
     @BindView(R.id.fab)
     FloatingActionButton mFloatingActionButton;
 
+    private NeighbourApiService mApiService;
+    private Neighbour mNeighbour;
+    private FavorisFragment mFavorisFragment;
+
+
     Boolean favors = false;
 
     @Override
@@ -50,6 +59,7 @@ public class InfoNeighbourActivity extends AppCompatActivity {
         ButterKnife.bind(this); // Set up
 
         setSupportActionBar(mToolbar);
+        mApiService = DI.getNeighbourApiService();
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,26 +92,27 @@ public class InfoNeighbourActivity extends AppCompatActivity {
         String about = getIntent().getStringExtra("ABOUT");
         aboutNeighbour.setText(about);
 
-        favors = getIntent().getBooleanExtra("FAVORIS", false);
-
         // Add favors
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             Context mContext = getApplicationContext();
 
+
+
             @Override
             public void onClick(View view) {
                 if (!favors) {
+                    mApiService.addFavNeighbour(mNeighbour);
                     mFloatingActionButton.setImageResource(R.drawable.ic_star_white_24dp);
                     Toast.makeText(mContext, "Add favoris", Toast.LENGTH_SHORT).show();
                     favors = true;
                 } else {
+                    mApiService.deleteFavNeighbour(mNeighbour);
                     mFloatingActionButton.setImageResource(R.drawable.ic_star_border_white_24dp);
                     Toast.makeText(mContext, "Remove favoris", Toast.LENGTH_SHORT).show();
                     favors = false;
                 }
             }
         });
-
 
     }
 }
