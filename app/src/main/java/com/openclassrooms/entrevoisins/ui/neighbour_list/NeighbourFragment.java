@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
@@ -22,23 +21,23 @@ import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.w3c.dom.Text;
 
 import java.util.List;
 
 import butterknife.BindView;
 
 
-public class NeighbourFragment extends Fragment implements RecyclerViewInterface { //
+public class NeighbourFragment extends Fragment implements RecyclerViewInterface {
 
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
-
     @BindView(R.id.item_list_avatar)
     ImageView itemListAvatar;
 
     TextView mTextView;
+
+
 
     /**
      * Create and return a new instance
@@ -72,7 +71,7 @@ public class NeighbourFragment extends Fragment implements RecyclerViewInterface
      */
     private void initList() {
         mNeighbours = mApiService.getNeighbours();
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this)); //
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this));
     }
 
     @Override
@@ -103,7 +102,7 @@ public class NeighbourFragment extends Fragment implements RecyclerViewInterface
         initList();
     }
 
-    @Override //
+    @Override
     public void onItemClick(int position) {
         Intent intent = new Intent(getActivity(), InfoNeighbourActivity.class);
 
@@ -116,5 +115,6 @@ public class NeighbourFragment extends Fragment implements RecyclerViewInterface
         intent.putExtra("ABOUT", mNeighbour.getAboutMe());
 
         startActivity(intent);
+
     }
 }

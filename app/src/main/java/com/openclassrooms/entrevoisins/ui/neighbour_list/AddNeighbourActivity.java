@@ -87,7 +87,8 @@ public class AddNeighbourActivity extends AppCompatActivity {
                 mNeighbourImage,
                 addressInput.getEditText().getText().toString(),
                 phoneInput.getEditText().getText().toString(),
-                aboutMeInput.getEditText().getText().toString());
+                aboutMeInput.getEditText().getText().toString()
+        );
         mApiService.createNeighbour(neighbour);
         finish();
     }
