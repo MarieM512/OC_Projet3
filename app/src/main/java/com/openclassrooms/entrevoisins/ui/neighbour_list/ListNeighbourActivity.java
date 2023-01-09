@@ -1,11 +1,15 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+
+import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.Button;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.openclassrooms.entrevoisins.R;
 
@@ -24,6 +28,8 @@ public class ListNeighbourActivity extends AppCompatActivity {
     ViewPager mViewPager;
 
     ListNeighbourPagerAdapter mPagerAdapter;
+    Integer tabSelected;
+    Integer tabCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +43,26 @@ public class ListNeighbourActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mTabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
+
+
+        tabSelected = mTabLayout.getSelectedTabPosition();
+        tabCount = mTabLayout.getTabCount();
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Toast.makeText(getApplicationContext(), tabSelected.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     @OnClick(R.id.add_neighbour)

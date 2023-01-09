@@ -1,6 +1,7 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -9,6 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
@@ -18,16 +22,23 @@ import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.w3c.dom.Text;
 
 import java.util.List;
 
+import butterknife.BindView;
 
-public class NeighbourFragment extends Fragment {
+
+public class NeighbourFragment extends Fragment implements RecyclerViewInterface { //
 
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
 
+    @BindView(R.id.item_list_avatar)
+    ImageView itemListAvatar;
+
+    TextView mTextView;
 
     /**
      * Create and return a new instance
@@ -52,6 +63,7 @@ public class NeighbourFragment extends Fragment {
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        mTextView = mRecyclerView.findViewById(R.id.item_list_name);
         return view;
     }
 
@@ -60,7 +72,7 @@ public class NeighbourFragment extends Fragment {
      */
     private void initList() {
         mNeighbours = mApiService.getNeighbours();
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this)); //
     }
 
     @Override
@@ -89,5 +101,20 @@ public class NeighbourFragment extends Fragment {
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         mApiService.deleteNeighbour(event.neighbour);
         initList();
+    }
+
+    @Override //
+    public void onItemClick(int position) {
+        Intent intent = new Intent(getActivity(), InfoNeighbourActivity.class);
+
+        Neighbour mNeighbour = mNeighbours.get(position);
+
+        intent.putExtra("AVATAR", mNeighbour.getAvatarUrl());
+        intent.putExtra("NAME", mNeighbour.getName());
+        intent.putExtra("ADDRESS", mNeighbour.getAddress());
+        intent.putExtra("PHONE", mNeighbour.getPhoneNumber());
+        intent.putExtra("ABOUT", mNeighbour.getAboutMe());
+
+        startActivity(intent);
     }
 }
