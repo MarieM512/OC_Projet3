@@ -2,7 +2,10 @@ package com.openclassrooms.entrevoisins.events;
 
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
-public class DeleteFavNeighbourEvent {
+/**
+ * Event fired when a user deletes a Neighbour
+ */
+public class AddFavNeighbourEvent {
 
     /**
      * Neighbour to delete
@@ -13,7 +16,7 @@ public class DeleteFavNeighbourEvent {
      * Constructor.
      * @param neighbour
      */
-    public DeleteFavNeighbourEvent(Neighbour neighbour) {
+    public AddFavNeighbourEvent(Neighbour neighbour) {
         this.neighbour = neighbour;
     }
 }

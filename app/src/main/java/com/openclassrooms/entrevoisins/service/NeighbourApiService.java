@@ -33,7 +33,7 @@ public interface NeighbourApiService {
      * Get all my Favorite Neighbours
      * @return {@link List}
      */
-    ArrayList getFavNeighbours();
+    ArrayList<Neighbour> getFavNeighbours();
 
     /**
      * Add a favorite neighbour

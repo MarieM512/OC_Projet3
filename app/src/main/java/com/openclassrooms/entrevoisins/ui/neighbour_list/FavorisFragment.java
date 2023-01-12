@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import android.widget.TextView;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
-import com.openclassrooms.entrevoisins.events.DeleteFavNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
@@ -31,7 +32,7 @@ public class FavorisFragment extends Fragment implements RecyclerViewInterface {
 
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
-    private ArrayList mFavList;
+    private ArrayList<Neighbour> mFavList;
     private RecyclerView mRecyclerView;
     @BindView(R.id.item_list_avatar)
     ImageView itemListAvatar;
@@ -87,7 +88,7 @@ public class FavorisFragment extends Fragment implements RecyclerViewInterface {
      * @param event
      */
     @Subscribe
-    public void onDeleteFavNeighbour(DeleteFavNeighbourEvent event) {
+    public void deleteFavNeighbour(DeleteNeighbourEvent event) {
         mApiService.deleteFavNeighbour(event.neighbour);
         initList();
     }
@@ -98,6 +99,7 @@ public class FavorisFragment extends Fragment implements RecyclerViewInterface {
 
         Neighbour mNeighbour = mNeighbours.get(position);
 
+        intent.putExtra("ID",mNeighbour.getId());
         intent.putExtra("AVATAR", mNeighbour.getAvatarUrl());
         intent.putExtra("NAME", mNeighbour.getName());
         intent.putExtra("ADDRESS", mNeighbour.getAddress());

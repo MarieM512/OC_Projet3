@@ -1,11 +1,13 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,14 +17,16 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
+import com.openclassrooms.entrevoisins.events.AddFavNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class InfoNeighbourActivity extends AppCompatActivity {
 
@@ -46,12 +50,10 @@ public class InfoNeighbourActivity extends AppCompatActivity {
     FloatingActionButton mFloatingActionButton;
 
     private NeighbourApiService mApiService;
-    private Neighbour mNeighbour;
-    private FavorisFragment mFavorisFragment;
-
 
     Boolean favors = false;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,21 +94,26 @@ public class InfoNeighbourActivity extends AppCompatActivity {
         String about = getIntent().getStringExtra("ABOUT");
         aboutNeighbour.setText(about);
 
+        Long id = getIntent().getLongExtra("ID", 0);
+
+        Neighbour neighbour = new Neighbour(id, name, img, addressNeighbour, phoneNeighbour, about);
+
+        mApiService.createNeighbour(neighbour);
+
         // Add favors
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            Context mContext = getApplicationContext();
-
-
+            final Context mContext = getApplicationContext();
 
             @Override
             public void onClick(View view) {
                 if (!favors) {
-                    mApiService.addFavNeighbour(mNeighbour);
+                    mApiService.addFavNeighbour(neighbour);
+                    Log.d("Info", String.valueOf(mApiService.getFavNeighbours().size()));
                     mFloatingActionButton.setImageResource(R.drawable.ic_star_white_24dp);
                     Toast.makeText(mContext, "Add favoris", Toast.LENGTH_SHORT).show();
                     favors = true;
                 } else {
-                    mApiService.deleteFavNeighbour(mNeighbour);
+                    mApiService.deleteFavNeighbour(neighbour);
                     mFloatingActionButton.setImageResource(R.drawable.ic_star_border_white_24dp);
                     Toast.makeText(mContext, "Remove favoris", Toast.LENGTH_SHORT).show();
                     favors = false;

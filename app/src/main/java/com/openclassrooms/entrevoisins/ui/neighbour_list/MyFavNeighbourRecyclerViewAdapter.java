@@ -26,12 +26,11 @@ import butterknife.ButterKnife;
 
 public class MyFavNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyFavNeighbourRecyclerViewAdapter.ViewHolder> {
 
-    private final ArrayList mFavList;
-    private List<Neighbour> mNeighbours;
+    private final ArrayList<Neighbour> mFavList;
     private final RecyclerViewInterface mRecyclerViewInterface; //
 
-    public MyFavNeighbourRecyclerViewAdapter(ArrayList items, RecyclerViewInterface mRecyclerViewInterface) {
-        mFavList = items;
+    public MyFavNeighbourRecyclerViewAdapter(ArrayList<Neighbour> items, RecyclerViewInterface mRecyclerViewInterface) {
+        mFavList = items; //
         this.mRecyclerViewInterface = mRecyclerViewInterface; //
     }
 
@@ -44,19 +43,22 @@ public class MyFavNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Neighbour neighbour = mNeighbours.get(position);
-        holder.mNeighbourName.setText(neighbour.getName());
-        Glide.with(holder.mNeighbourAvatar.getContext())
+        Neighbour neighbour = mFavList.get(position);
+        Long id = neighbour.getId();
+        Log.d("Info", String.valueOf(id));
+        holder.mFavNeighbourName.setText(neighbour.getName());
+        Glide.with(holder.mFavNeighbourAvatar.getContext())
                 .load(neighbour.getAvatarUrl())
                 .apply(RequestOptions.circleCropTransform())
-                .into(holder.mNeighbourAvatar);
+                .into(holder.mFavNeighbourAvatar);
 
-        holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
+        holder.mFavDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
             }
         });
+
     }
 
     @Override
@@ -66,25 +68,24 @@ public class MyFavNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.item_list_avatar)
-        public ImageView mNeighbourAvatar;
+        public ImageView mFavNeighbourAvatar;
         @BindView(R.id.item_list_name)
-        public TextView mNeighbourName;
+        public TextView mFavNeighbourName;
         @BindView(R.id.item_list_delete_button)
-        public ImageButton mDeleteButton;
+        public ImageButton mFavDeleteButton;
 
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
 
-
             //
-            itemView.setOnClickListener(new View.OnClickListener(){
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (mRecyclerViewInterface != null){
+                    if (mRecyclerViewInterface != null) {
                         int pos = getAdapterPosition();
 
-                        if (pos != RecyclerView.NO_POSITION){
+                        if (pos != RecyclerView.NO_POSITION) {
                             mRecyclerViewInterface.onItemClick(pos);
                         }
                     }

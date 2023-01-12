@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
+import com.openclassrooms.entrevoisins.events.AddFavNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
@@ -83,6 +85,7 @@ public class NeighbourFragment extends Fragment implements RecyclerViewInterface
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+        // EventBus.getDefault().postSticky(Neighbour.class);
     }
 
     @Override
@@ -101,12 +104,20 @@ public class NeighbourFragment extends Fragment implements RecyclerViewInterface
         initList();
     }
 
+    @Subscribe
+    public void addFavNeighbour(AddFavNeighbourEvent event) {
+        mApiService.addFavNeighbour(event.neighbour);
+        initList();
+    }
+
     @Override
     public void onItemClick(int position) {
         Intent intent = new Intent(getActivity(), InfoNeighbourActivity.class);
 
         Neighbour mNeighbour = mNeighbours.get(position);
+        Log.d("Info", String.valueOf(mNeighbour.getId()));
 
+        intent.putExtra("ID", mNeighbour.getId());
         intent.putExtra("AVATAR", mNeighbour.getAvatarUrl());
         intent.putExtra("NAME", mNeighbour.getName());
         intent.putExtra("ADDRESS", mNeighbour.getAddress());
@@ -114,6 +125,5 @@ public class NeighbourFragment extends Fragment implements RecyclerViewInterface
         intent.putExtra("ABOUT", mNeighbour.getAboutMe());
 
         startActivity(intent);
-
     }
 }
