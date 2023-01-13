@@ -17,11 +17,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
-import com.openclassrooms.entrevoisins.events.AddFavNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.Locale;
 
@@ -50,8 +47,6 @@ public class InfoNeighbourActivity extends AppCompatActivity {
     FloatingActionButton mFloatingActionButton;
 
     private NeighbourApiService mApiService;
-
-    Boolean favors = false;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -94,11 +89,15 @@ public class InfoNeighbourActivity extends AppCompatActivity {
         String about = getIntent().getStringExtra("ABOUT");
         aboutNeighbour.setText(about);
 
-        Long id = getIntent().getLongExtra("ID", 0);
+        long id = getIntent().getLongExtra("ID", 0);
 
         Neighbour neighbour = new Neighbour(id, name, img, addressNeighbour, phoneNeighbour, about);
 
-        mApiService.createNeighbour(neighbour);
+        if (mApiService.getFavNeighbours().contains(neighbour)) {
+            mFloatingActionButton.setImageResource(R.drawable.ic_star_white_24dp);
+        } else {
+            mFloatingActionButton.setImageResource(R.drawable.ic_star_border_white_24dp);
+        }
 
         // Add favors
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -106,17 +105,14 @@ public class InfoNeighbourActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                if (!favors) {
-                    mApiService.addFavNeighbour(neighbour);
-                    Log.d("Info", String.valueOf(mApiService.getFavNeighbours().size()));
-                    mFloatingActionButton.setImageResource(R.drawable.ic_star_white_24dp);
-                    Toast.makeText(mContext, "Add favoris", Toast.LENGTH_SHORT).show();
-                    favors = true;
-                } else {
+                if (mApiService.getFavNeighbours().contains(neighbour)) {
                     mApiService.deleteFavNeighbour(neighbour);
                     mFloatingActionButton.setImageResource(R.drawable.ic_star_border_white_24dp);
-                    Toast.makeText(mContext, "Remove favoris", Toast.LENGTH_SHORT).show();
-                    favors = false;
+                    Toast.makeText(mContext, "Removed", Toast.LENGTH_SHORT).show();
+                } else {
+                    mApiService.addFavNeighbour(neighbour);
+                    mFloatingActionButton.setImageResource(R.drawable.ic_star_white_24dp);
+                    Toast.makeText(mContext, "Added", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import android.widget.TextView;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
-import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.DeleteFavNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
@@ -24,14 +23,12 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 
 public class FavorisFragment extends Fragment implements RecyclerViewInterface {
 
     private NeighbourApiService mApiService;
-    private List<Neighbour> mNeighbours;
     private ArrayList<Neighbour> mFavList;
     private RecyclerView mRecyclerView;
     @BindView(R.id.item_list_avatar)
@@ -88,7 +85,7 @@ public class FavorisFragment extends Fragment implements RecyclerViewInterface {
      * @param event
      */
     @Subscribe
-    public void deleteFavNeighbour(DeleteNeighbourEvent event) {
+    public void deleteFavNeighbour(DeleteFavNeighbourEvent event) {
         mApiService.deleteFavNeighbour(event.neighbour);
         initList();
     }
@@ -97,7 +94,7 @@ public class FavorisFragment extends Fragment implements RecyclerViewInterface {
     public void onItemClick(int position) {
         Intent intent = new Intent(getActivity(), InfoNeighbourActivity.class);
 
-        Neighbour mNeighbour = mNeighbours.get(position);
+        Neighbour mNeighbour = mFavList.get(position);
 
         intent.putExtra("ID",mNeighbour.getId());
         intent.putExtra("AVATAR", mNeighbour.getAvatarUrl());
