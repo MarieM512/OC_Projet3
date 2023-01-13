@@ -52,4 +52,9 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     public void deleteFavNeighbour(Neighbour neighbour) {
         favoriteList.remove(neighbour);
     }
+
+    @Override
+    public boolean checkFavNeighbour(Neighbour neighbour) {
+        return (favoriteList.contains(neighbour));
+    }
 }

@@ -93,7 +93,7 @@ public class InfoNeighbourActivity extends AppCompatActivity {
 
         Neighbour neighbour = new Neighbour(id, name, img, addressNeighbour, phoneNeighbour, about);
 
-        if (mApiService.getFavNeighbours().contains(neighbour)) {
+        if (mApiService.checkFavNeighbour(neighbour)) {
             mFloatingActionButton.setImageResource(R.drawable.ic_star_white_24dp);
         } else {
             mFloatingActionButton.setImageResource(R.drawable.ic_star_border_white_24dp);
@@ -105,7 +105,7 @@ public class InfoNeighbourActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                if (mApiService.getFavNeighbours().contains(neighbour)) {
+                if (mApiService.checkFavNeighbour(neighbour)) {
                     mApiService.deleteFavNeighbour(neighbour);
                     mFloatingActionButton.setImageResource(R.drawable.ic_star_border_white_24dp);
                     Toast.makeText(mContext, "Removed", Toast.LENGTH_SHORT).show();

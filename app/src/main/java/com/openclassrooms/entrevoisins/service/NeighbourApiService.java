@@ -46,4 +46,11 @@ public interface NeighbourApiService {
      * @param neighbour
      */
     void deleteFavNeighbour(Neighbour neighbour);
+
+    /**
+     * Check if neighbour is in favorite
+     * @param neighbour
+     * @return
+     */
+    boolean checkFavNeighbour(Neighbour neighbour);
 }
