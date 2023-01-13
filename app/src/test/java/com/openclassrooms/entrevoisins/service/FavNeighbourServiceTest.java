@@ -45,13 +45,6 @@ public class FavNeighbourServiceTest {
         assertEquals(1, neighbours.size());
     }
 
-//    @Test
-//    public void getNeighboursWithSuccess() {
-//        List<Neighbour> neighbours = service.getNeighbours();
-//        List<Neighbour> expectedNeighbours = DummyNeighbourGenerator.DUMMY_NEIGHBOURS;
-//        assertThat(neighbours, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedNeighbours.toArray()));
-//    }
-
     @Test
     public void checkIsFavNeighbourWithSuccess() {
         Neighbour neighbourToAdd = service.getNeighbours().get(0);

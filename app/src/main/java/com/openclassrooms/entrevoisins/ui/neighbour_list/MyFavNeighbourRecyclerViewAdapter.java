@@ -63,11 +63,11 @@ public class MyFavNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_list_avatar)
+        @BindView(R.id.item_fav_list_avatar)
         public ImageView mFavNeighbourAvatar;
-        @BindView(R.id.item_list_name)
+        @BindView(R.id.item_fav_list_name)
         public TextView mFavNeighbourName;
-        @BindView(R.id.item_list_delete_button)
+        @BindView(R.id.item_fav_list_delete_button)
         public ImageButton mFavDeleteButton;
 
         public ViewHolder(View view) {
