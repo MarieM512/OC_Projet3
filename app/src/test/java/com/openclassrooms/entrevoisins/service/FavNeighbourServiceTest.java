@@ -1,7 +1,9 @@
 package com.openclassrooms.entrevoisins.service;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
@@ -21,6 +23,7 @@ import java.util.List;
 public class FavNeighbourServiceTest {
 
     private NeighbourApiService service;
+    private Neighbour neighbour;
 
     @Before
     public void setup() {
@@ -28,16 +31,40 @@ public class FavNeighbourServiceTest {
     }
 
     @Test
-    public void getNeighboursWithSuccess() {
-        List<Neighbour> neighbours = service.getNeighbours();
-        List<Neighbour> expectedNeighbours = DummyNeighbourGenerator.DUMMY_NEIGHBOURS;
-        assertThat(neighbours, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedNeighbours.toArray()));
+    public void addFavNeighbourWithSuccess() {
+        Neighbour neighbourToAdd = service.getNeighbours().get(0);
+        service.addFavNeighbour(neighbourToAdd);
+        assertTrue(service.getFavNeighbours().contains(neighbourToAdd));
+    }
+
+    @Test
+    public void getFavNeighboursWithSuccess() {
+        Neighbour neighbourToAdd = service.getNeighbours().get(0);
+        service.addFavNeighbour(neighbourToAdd);
+        List<Neighbour> neighbours = service.getFavNeighbours();
+        assertEquals(1, neighbours.size());
+    }
+
+//    @Test
+//    public void getNeighboursWithSuccess() {
+//        List<Neighbour> neighbours = service.getNeighbours();
+//        List<Neighbour> expectedNeighbours = DummyNeighbourGenerator.DUMMY_NEIGHBOURS;
+//        assertThat(neighbours, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedNeighbours.toArray()));
+//    }
+
+    @Test
+    public void checkIsFavNeighbourWithSuccess() {
+        Neighbour neighbourToAdd = service.getNeighbours().get(0);
+        service.addFavNeighbour(neighbourToAdd);
+        assertTrue(service.checkIsFavNeighbour(neighbourToAdd));
     }
 
     @Test
     public void deleteNeighbourWithSuccess() {
-        Neighbour neighbourToDelete = service.getNeighbours().get(0);
-        service.deleteNeighbour(neighbourToDelete);
-        assertFalse(service.getNeighbours().contains(neighbourToDelete));
+        Neighbour neighbourToAdd = service.getNeighbours().get(0);
+        service.addFavNeighbour(neighbourToAdd);
+        Neighbour neighbourToDelete = service.getFavNeighbours().get(0);
+        service.deleteFavNeighbour(neighbourToDelete);
+        assertFalse(service.getFavNeighbours().contains(neighbourToDelete));
     }
 }

@@ -52,5 +52,5 @@ public interface NeighbourApiService {
      * @param neighbour
      * @return
      */
-    boolean checkFavNeighbour(Neighbour neighbour);
+    boolean checkIsFavNeighbour(Neighbour neighbour);
 }
