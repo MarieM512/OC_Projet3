@@ -1,7 +1,6 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +24,11 @@ import butterknife.ButterKnife;
 public class MyFavNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyFavNeighbourRecyclerViewAdapter.ViewHolder> {
 
     private final ArrayList<Neighbour> mFavList;
-    private final RecyclerViewInterface mRecyclerViewInterface; //
+    private final RecyclerViewInterface mRecyclerViewInterface;
 
     public MyFavNeighbourRecyclerViewAdapter(ArrayList<Neighbour> items, RecyclerViewInterface mRecyclerViewInterface) {
-        mFavList = items; //
-        this.mRecyclerViewInterface = mRecyclerViewInterface; //
+        mFavList = items;
+        this.mRecyclerViewInterface = mRecyclerViewInterface;
     }
 
     @Override
@@ -54,7 +53,6 @@ public class MyFavNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
                 EventBus.getDefault().post(new DeleteFavNeighbourEvent(neighbour));
             }
         });
-
     }
 
     @Override
@@ -74,7 +72,6 @@ public class MyFavNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
             super(view);
             ButterKnife.bind(this, view);
 
-            //
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -87,7 +84,6 @@ public class MyFavNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
                     }
                 }
             });
-
         }
     }
 }

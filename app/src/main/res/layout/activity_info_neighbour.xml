@@ -15,7 +15,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="250dp">
@@ -34,7 +33,6 @@
                         tools:ignore="MissingConstraints"
                         tools:srcCompat="@tools:sample/avatars" />
 
-
                     <android.support.v7.widget.Toolbar
                         android:id="@+id/toolbar"
                         android:layout_width="match_parent"
@@ -43,11 +41,8 @@
 
 
                     </android.support.v7.widget.Toolbar>
-
                 </android.support.design.widget.CollapsingToolbarLayout>
-
             </android.support.design.widget.AppBarLayout>
-
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_info_neighbour"
@@ -143,11 +138,7 @@
                             android:padding="8dp"
                             android:text="Network" />
                     </LinearLayout>
-
-
                 </LinearLayout>
-
-
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -188,11 +179,8 @@
                         android:padding="8dp"
                         android:text="About neighbour" />
                 </LinearLayout>
-
             </android.support.v7.widget.CardView>
-
         </LinearLayout>
-
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
@@ -204,8 +192,5 @@
             android:src="@drawable/ic_star_border_white_24dp"
             app:backgroundTint="@color/colorWhite" />
 
-
     </FrameLayout>
-
-
 </android.support.constraint.ConstraintLayout>

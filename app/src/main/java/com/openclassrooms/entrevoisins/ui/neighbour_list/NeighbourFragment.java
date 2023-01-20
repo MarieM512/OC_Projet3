@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,9 +34,7 @@ public class NeighbourFragment extends Fragment implements RecyclerViewInterface
     private RecyclerView mRecyclerView;
     @BindView(R.id.item_list_avatar)
     ImageView itemListAvatar;
-
     TextView mTextView;
-
 
     /**
      * Create and return a new instance

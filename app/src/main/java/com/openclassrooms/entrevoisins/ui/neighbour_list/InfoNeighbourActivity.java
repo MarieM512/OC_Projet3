@@ -7,7 +7,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -99,7 +98,6 @@ public class InfoNeighbourActivity extends AppCompatActivity {
             mFloatingActionButton.setImageResource(R.drawable.ic_star_border_white_24dp);
         }
 
-        // Add favors
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             final Context mContext = getApplicationContext();
 
@@ -116,6 +114,5 @@ public class InfoNeighbourActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 }

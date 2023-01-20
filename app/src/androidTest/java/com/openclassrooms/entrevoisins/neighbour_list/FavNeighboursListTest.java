@@ -23,7 +23,6 @@ import com.openclassrooms.entrevoisins.utils.ClickNeighbourViewAction;
 
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

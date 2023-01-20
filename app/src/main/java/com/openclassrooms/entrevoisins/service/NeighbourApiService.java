@@ -5,7 +5,6 @@ import com.openclassrooms.entrevoisins.model.Neighbour;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * Neighbour API client
  */
@@ -48,7 +47,7 @@ public interface NeighbourApiService {
     void deleteFavNeighbour(Neighbour neighbour);
 
     /**
-     * Check if neighbour is in favorite
+     * Check if neighbour is in favorite list
      * @param neighbour
      * @return
      */
