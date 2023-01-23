@@ -17,6 +17,7 @@ import com.openclassrooms.entrevoisins.model.Neighbour;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -11,11 +11,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.events.DeleteFavNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,11 +26,11 @@ import butterknife.ButterKnife;
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> {
 
     private final List<Neighbour> mNeighbours;
-    private final RecyclerViewInterface mRecyclerViewInterface; //
+    private final RecyclerViewInterface mRecyclerViewInterface;
 
     public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, RecyclerViewInterface mRecyclerViewInterface) {
         mNeighbours = items;
-        this.mRecyclerViewInterface = mRecyclerViewInterface; //
+        this.mRecyclerViewInterface = mRecyclerViewInterface;
     }
 
     @Override
@@ -51,6 +53,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             @Override
             public void onClick(View v) {
                 EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
+                EventBus.getDefault().post(new DeleteFavNeighbourEvent(neighbour));
             }
         });
     }
